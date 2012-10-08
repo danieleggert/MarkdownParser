@@ -12,7 +12,7 @@
 @class UIColor;
 @class NSMutableParagraphStyle;
 
-extern NSString * const BOAttribtuedStringLinkTargetKey;
+extern NSString * const BOLinkAttributeName;
 
 typedef UIFont * (^BOFontReplacementBlock_t)(UIFont *oldFont);
 

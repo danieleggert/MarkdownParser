@@ -18,7 +18,7 @@
 
 
 
-NSString * const BOAttribtuedStringLinkTargetKey = @"linkTarget";
+NSString * const BOLinkAttributeName = @"BOLink";
 
 
 
@@ -67,7 +67,7 @@ static int renderDoubleEmphasis(struct buf *ob, struct buf *text, char c, void *
 static int renderEmphasis(struct buf *ob, struct buf *text, char c, void *opaque);
 //static int renderImage(struct buf *ob, struct buf *link, struct buf *title, struct buf *alt, void *opaque);
 static int renderLinebreak(struct buf *ob, void *opaque);
-static int renderLink(struct buf *ob, struct buf *link, struct buf *title, struct buf *content, void *opaque);
+static int renderLink(struct buf *ob, struct buf *linkBuffer, struct buf *title, struct buf *content, void *opaque);
 //static int renderRawHTMLTag(struct buf *ob, struct buf *tag, void *opaque);
 //static int renderTripleEmphasis(struct buf *ob, struct buf *text, char c, void *opaque);
 //static void renderEntity(struct buf *ob, struct buf *entity, void *opaque);
@@ -195,7 +195,7 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
         return [UIFont boldSystemFontOfSize:size];
     };
     
-    self.replaceLinkFont = self.emphasizeFont;
+    self.replaceLinkFont = self.doubleEmphasizeFont;
 }
 
 - (void)preParseSetupAttributes;
@@ -237,9 +237,9 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
     
     [output addAttributesToRangeWithStartMarker:startLinkMarker endMarker:endLinkMarker usingAttributesBlock:^NSDictionary *(unichar marker){
         NSUInteger const linkIndex = (marker - linkOffset);
-        if (linkIndex < [_links count]) {
-            NSString *link = [_links objectAtIndex:linkIndex];
-            return @{NSForegroundColorAttributeName: self.linkTextColor, BOAttribtuedStringLinkTargetKey: link};
+        if (linkIndex < [self.links count]) {
+            id link = [self.links objectAtIndex:linkIndex];
+            return @{NSForegroundColorAttributeName: self.linkTextColor, BOLinkAttributeName: link};
         } else {
             return nil;
         }
@@ -361,18 +361,24 @@ static int renderLinebreak(struct buf *ob, void * UNUSED opaque)
     return 1;
 }
 
-static int renderLink(UNUSED struct buf *ob, struct buf *link, struct buf * UNUSED title, struct buf *content, void *opaque)
+static int renderLink(UNUSED struct buf *ob, struct buf *linkBuffer, struct buf * UNUSED title, struct buf *content, void *opaque)
 {
-    NSData *linkData = [NSData dataWithBytes:link->data length:link->size];
+    NSData *linkData = [NSData dataWithBytes:linkBuffer->data length:linkBuffer->size];
     NSString *linkString = [[NSString alloc] initWithData:linkData encoding:NSUTF8StringEncoding];
-    BOMarkdownParser * const parser = (__bridge BOMarkdownParser *) opaque;
-    [parser.links addObject:linkString];
-    
-    unichar const linkMarker = linkOffset + (unichar)([parser.links count]) - 1;
-    NSString *startMarker = [startLinkMarker stringByAppendingString:[[NSString alloc] initWithCharacters:(const unichar []){linkMarker} length:1]];
-    bufputs(ob, [startMarker UTF8String]);
-    bufput(ob, content->data, content->size);
-    bufputs(ob, [endLinkMarker UTF8String]);
+    if (linkString != nil) {
+        BOMarkdownParser * const parser = (__bridge BOMarkdownParser *) opaque;
+        NSURL *link = [NSURL URLWithString:linkString];
+        [parser.links addObject:(link == nil) ? linkString : link];
+        
+        unichar const linkMarker = linkOffset + (unichar)([parser.links count]) - 1;
+        NSString *startMarker = [startLinkMarker stringByAppendingString:[[NSString alloc] initWithCharacters:(const unichar []){linkMarker} length:1]];
+        bufputs(ob, [startMarker UTF8String]);
+        bufput(ob, content->data, content->size);
+        bufputs(ob, [endLinkMarker UTF8String]);
+    } else {
+        NSLog(@"Unable to create URL from link '%@'", linkString);
+        bufput(ob, content->data, content->size);
+    }
     return 1;
 }
 
