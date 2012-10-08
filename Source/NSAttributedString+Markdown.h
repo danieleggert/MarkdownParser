@@ -17,6 +17,7 @@
 @interface NSMutableAttributedString (BOMarkers)
 
 - (void)addAttributes:(NSDictionary *)attributes toRangeWithStartMarker:(NSString *)startMarker endMarker:(NSString *)endMarker;
+- (void)addAttributes:(NSDictionary *)attributes toRangeWithStartMarker:(NSString *)startMarker endMarker:(NSString *)endMarker fontBlock:(BOFontReplacementBlock_t)fontBlock;
 
 - (void)addAttributesToRangeWithStartMarker:(NSString *)startMarker endMarker:(NSString *)endMarker usingAttributesBlock:(NSDictionary * (^)(unichar marker))block fontBlock:(BOFontReplacementBlock_t)fontBlock;
 

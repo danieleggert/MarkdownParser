@@ -26,10 +26,19 @@ __attribute__((visibility("default")))
 @property (nonatomic, strong) UIColor *textColor;
 @property (nonatomic, strong) NSMutableParagraphStyle *paragraphStyle;
 
+@property (nonatomic, copy) NSString *unorderedListBullet;
+@property (nonatomic, copy) NSString *(^listNumberFromIndex)(int const itemIndex);
+@property (nonatomic, copy) NSDictionary *listAttributes;
+@property (nonatomic, copy) NSDictionary *listItemAttributes;
+
 @property (nonatomic, copy) BOFontReplacementBlock_t emphasizeFont;
-@property (nonatomic, strong) BOFontReplacementBlock_t doubleEmphasizeFont;
+@property (nonatomic, copy) BOFontReplacementBlock_t doubleEmphasizeFont;
 @property (nonatomic, strong) UIColor *linkTextColor;
-@property (nonatomic, strong) BOFontReplacementBlock_t replaceLinkFont;
+@property (nonatomic, copy) BOFontReplacementBlock_t replaceLinkFont;
+
+/** For header levels 1 - 6 */
+@property (nonatomic, copy) NSArray *headerFontReplacementBlocks;
+@property (nonatomic, copy) NSArray *headerAttributes;
 
 - (NSAttributedString *)parseString:(NSString *)input;
 

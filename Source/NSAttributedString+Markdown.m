@@ -18,6 +18,11 @@
 
 - (void)addAttributes:(NSDictionary *)attributes toRangeWithStartMarker:(NSString *)startMarker endMarker:(NSString *)endMarker;
 {
+    [self addAttributes:attributes toRangeWithStartMarker:startMarker endMarker:endMarker fontBlock:nil];
+}
+
+- (void)addAttributes:(NSDictionary *)attributes toRangeWithStartMarker:(NSString *)startMarker endMarker:(NSString *)endMarker fontBlock:(BOFontReplacementBlock_t)fontBlock;
+{
     NSMutableString *string = [self mutableString];
     NSRange remainingRange = NSMakeRange(0, [string length]);
     while (0 < remainingRange.length) {
@@ -37,7 +42,17 @@
                 remainingRange.location -= startRange.length + endRange.length;
                 // Set style:
                 NSRange styleRange = NSMakeRange(startRange.location, endRange.location - startRange.location - startRange.length);
-                [self addAttributes:attributes range:styleRange];
+                if (attributes != nil) {
+                    [self addAttributes:attributes range:styleRange];
+                }
+                if (fontBlock != nil) {
+                    [self enumerateAttribute:NSFontAttributeName inRange:styleRange options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(UIFont *originalFont, NSRange fontRange, BOOL *stop)
+                     {
+                         (void) stop;
+                         UIFont *newFont = fontBlock(originalFont);
+                         [self addAttributes:@{NSFontAttributeName: newFont} range:fontRange];
+                     }];
+                }
             }
         }
     }

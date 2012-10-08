@@ -102,4 +102,91 @@ do { \
     BOAssertEqualRanges(range, NSMakeRange(7, 5), @"");
 }
 
+- (void)testList;
+{
+    NSAttributedString *output = [parser parseString:
+                                  @"Here's a list:\n\n"
+                                  @" * aaa\n"
+                                  @" * bbb\n"
+                                  @" * ccc\n\n"
+                                  @"And that's it."
+                                  ];
+    STAssertNotNil(output, @"");
+    STAssertEqualObjects([output string], @"Here's a list:\n•\taaa\n•\tbbb\n•\tccc\nAnd that's it.\n", @"");
+    
+    NSDictionary *shouldAttr = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: [UIFont systemFontOfSize:14.]};
+    NSMutableDictionary *shouldListAttr = [NSMutableDictionary dictionaryWithDictionary:shouldAttr];
+    [shouldListAttr addEntriesFromDictionary:parser.listAttributes];
+
+    NSRange range;
+    NSDictionary *attr = [output attributesAtIndex:0 longestEffectiveRange:&range inRange:NSMakeRange(0, [output length])];
+    STAssertEqualObjects(attr, shouldAttr, @"");
+    BOAssertEqualRanges(range, NSMakeRange(0, 15), @"");
+
+    attr = [output attributesAtIndex:16 longestEffectiveRange:&range inRange:NSMakeRange(0, [output length])];
+    STAssertEqualObjects(attr, shouldListAttr, @"");
+    BOAssertEqualRanges(range, NSMakeRange(15, 18), @"");
+
+    attr = [output attributesAtIndex:35 longestEffectiveRange:&range inRange:NSMakeRange(0, [output length])];
+    STAssertEqualObjects(attr, shouldAttr, @"");
+    BOAssertEqualRanges(range, NSMakeRange(33, 15), @"");
+}
+
+- (void)testOrderedList;
+{
+    NSAttributedString *output = [parser parseString:
+                                  @"Here's a list:\n\n"
+                                  @" 1. AAA\n"
+                                  @" 6. BBB\n"
+                                  @" 2. CCC\n\n"
+                                  @"And that's it."
+                                  ];
+    STAssertNotNil(output, @"");
+    STAssertEqualObjects([output string], @"Here's a list:\n1.\tAAA\n2.\tBBB\n3.\tCCC\nAnd that's it.\n", @"");
+}
+
+- (void)testHeaders;
+{
+    NSAttributedString *output = [parser parseString:
+                                  @"# Header 1\n\n"
+                                  @"Lorem ipsum.\n\n"
+                                  @"## Header 2\n\n"
+                                  @"Lorem ipsum.\n\n"
+                                  @"### Header 3\n\n"
+                                  @"Lorem ipsum.\n"
+                                  ];
+    STAssertNotNil(output, @"");
+    STAssertEqualObjects([output string], @"Header 1\nLorem ipsum.\nHeader 2\nLorem ipsum.\nHeader 3\nLorem ipsum.\n", @"");
+
+    NSDictionary *shouldAttr = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: [UIFont systemFontOfSize:14.]};
+    NSDictionary *shouldAttrHeader1 = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:24.]};
+    NSDictionary *shouldAttrHeader2 = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:20.]};
+    NSDictionary *shouldAttrHeader3 = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:18.]};
+    
+    NSRange range;
+    NSDictionary *attr = [output attributesAtIndex:0 longestEffectiveRange:&range inRange:NSMakeRange(0, [output length])];
+    STAssertEqualObjects(attr, shouldAttrHeader1, @"");
+    BOAssertEqualRanges(range, NSMakeRange(0, 9), @"");
+    
+    attr = [output attributesAtIndex:10 longestEffectiveRange:&range inRange:NSMakeRange(0, [output length])];
+    STAssertEqualObjects(attr, shouldAttr, @"");
+    BOAssertEqualRanges(range, NSMakeRange(9, 13), @"");
+    
+    attr = [output attributesAtIndex:22 longestEffectiveRange:&range inRange:NSMakeRange(0, [output length])];
+    STAssertEqualObjects(attr, shouldAttrHeader2, @"");
+    BOAssertEqualRanges(range, NSMakeRange(22, 9), @"");
+
+    attr = [output attributesAtIndex:31 longestEffectiveRange:&range inRange:NSMakeRange(0, [output length])];
+    STAssertEqualObjects(attr, shouldAttr, @"");
+    BOAssertEqualRanges(range, NSMakeRange(31, 13), @"");
+    
+    attr = [output attributesAtIndex:44 longestEffectiveRange:&range inRange:NSMakeRange(0, [output length])];
+    STAssertEqualObjects(attr, shouldAttrHeader3, @"");
+    BOAssertEqualRanges(range, NSMakeRange(44, 9), @"");
+    
+    attr = [output attributesAtIndex:53 longestEffectiveRange:&range inRange:NSMakeRange(0, [output length])];
+    STAssertEqualObjects(attr, shouldAttr, @"");
+    BOAssertEqualRanges(range, NSMakeRange(53, 13), @"");
+}
+
 @end
