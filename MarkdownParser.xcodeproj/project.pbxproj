@@ -71,7 +71,7 @@
 		3EB17E64161F17B200A27750 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		3EB17E6C161F17B200A27750 /* MarkdownParserTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MarkdownParserTests-Info.plist"; sourceTree = "<group>"; };
 		3EB17E6E161F17B200A27750 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3EB17E71161F17B200A27750 /* MarkdownParserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MarkdownParserTests.m; sourceTree = "<group>"; };
+		3EB17E71161F17B200A27750 /* MarkdownParserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MarkdownParserTests.m; sourceTree = "<group>"; usesTabs = 0; };
 		3EB17E82161F184D00A27750 /* BOAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOAppDelegate.h; sourceTree = "<group>"; };
 		3EB17E83161F184D00A27750 /* BOAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOAppDelegate.m; sourceTree = "<group>"; };
 		3EB17E84161F184D00A27750 /* BOViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOViewController.h; sourceTree = "<group>"; };
@@ -84,8 +84,8 @@
 		3EB17E8E161F184D00A27750 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3EB17E8F161F184D00A27750 /* MarkdownParser-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MarkdownParser-Info.plist"; sourceTree = "<group>"; };
 		3EB17E9A161F187D00A27750 /* MarkdownParser-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MarkdownParser-Prefix.pch"; path = "Source/MarkdownParser-Prefix.pch"; sourceTree = SOURCE_ROOT; };
-		3EB17E9B161F187D00A27750 /* BOMarkdownParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BOMarkdownParser.h; path = Source/BOMarkdownParser.h; sourceTree = SOURCE_ROOT; };
-		3EB17E9C161F187D00A27750 /* BOMarkdownParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = BOMarkdownParser.m; path = Source/BOMarkdownParser.m; sourceTree = SOURCE_ROOT; };
+		3EB17E9B161F187D00A27750 /* BOMarkdownParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BOMarkdownParser.h; path = Source/BOMarkdownParser.h; sourceTree = SOURCE_ROOT; usesTabs = 0; };
+		3EB17E9C161F187D00A27750 /* BOMarkdownParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = BOMarkdownParser.m; path = Source/BOMarkdownParser.m; sourceTree = SOURCE_ROOT; usesTabs = 0; };
 		3EB17EA1161F189F00A27750 /* libMarkdownParser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMarkdownParser.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EB17EB1161F199900A27750 /* array.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = array.c; sourceTree = "<group>"; };
 		3EB17EB2161F199900A27750 /* buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = buffer.c; sourceTree = "<group>"; };
@@ -93,11 +93,32 @@
 		3EB17EBA161F19B100A27750 /* array.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = array.h; sourceTree = "<group>"; };
 		3EB17EBB161F19B100A27750 /* buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
 		3EB17EBC161F19B100A27750 /* markdown.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = markdown.h; sourceTree = "<group>"; };
-		3EB17EBD161F1A8700A27750 /* NSAttributedString+Markdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+Markdown.h"; path = "Source/NSAttributedString+Markdown.h"; sourceTree = SOURCE_ROOT; };
-		3EB17EBE161F1A8700A27750 /* NSAttributedString+Markdown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+Markdown.m"; path = "Source/NSAttributedString+Markdown.m"; sourceTree = SOURCE_ROOT; };
+		3EB17EBD161F1A8700A27750 /* NSAttributedString+Markdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+Markdown.h"; path = "Source/NSAttributedString+Markdown.h"; sourceTree = SOURCE_ROOT; usesTabs = 0; };
+		3EB17EBE161F1A8700A27750 /* NSAttributedString+Markdown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+Markdown.m"; path = "Source/NSAttributedString+Markdown.m"; sourceTree = SOURCE_ROOT; usesTabs = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3DE3BA901658FF2E00CE504F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DE3BABA165901AC00CE504F /* AppKit.framework in Frameworks */,
+				3DE3BAA91658FF9000CE504F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3DE3BAC91659087100CE504F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DE3BB0E16590C7E00CE504F /* MarkdownParserMac.framework in Frameworks */,
+				3DE3BB0D16590C4600CE504F /* Cocoa.framework in Frameworks */,
+				3DE3BAE1165908DD00CE504F /* AppKit.framework in Frameworks */,
+				3DE3BAE0165908D800CE504F /* Foundation.framework in Frameworks */,
+				3DE3BACE1659087100CE504F /* SenTestingKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3EB17E39161F17B100A27750 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
