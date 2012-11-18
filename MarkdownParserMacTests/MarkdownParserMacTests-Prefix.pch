@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'MarkdownParserMacTests' target in the 'MarkdownParserMacTests' project
+//
+
+#ifdef __OBJC__
+	#import <Foundation/Foundation.h>
+	#import "OS-X-ObjC-Compatibility.h"
+#endif

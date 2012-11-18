@@ -10,8 +10,11 @@
 #import "NSAttributedString+Markdown.h"
 
 #import <libkern/OSAtomic.h>
-#import <UIKit/UIKit.h>
-
+#ifdef __IPHONE_OS_VERSION_MIN_REQUIRED
+    #import <UIKit/UIKit.h>
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+    #import <AppKit/AppKit.h>
+#endif
 
 
 @implementation NSMutableAttributedString (BOMarkers)
