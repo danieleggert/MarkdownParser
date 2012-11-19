@@ -7,10 +7,10 @@
 //
 
 #import <SenTestingKit/SenTestingKit.h>
-#ifdef __IPHONE_OS_VERSION_MIN_REQUIRED
+#if TARGET_OS_IPHONE
     #import <UIKit/UIKit.h>
     #import "BOMarkdownParser.h"
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#else
     #import <AppKit/AppKit.h>
     #import <MarkdownParserMac/BOMarkdownParser.h>
 #endif
@@ -77,9 +77,9 @@ do { \
 - (void)setUp
 {
     [super setUp];
-#ifdef __IPHONE_OS_VERSION_MIN_REQUIRED
+#if TARGET_OS_IPHONE
     parser = [NSClassFromString(@"BOMarkdownParser") parser];
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#else
     parser = [BOMarkdownParser parser];
 #endif
     

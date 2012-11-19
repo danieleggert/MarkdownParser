@@ -9,9 +9,9 @@
 #import "BOMarkdownParser.h"
 
 #import "NSAttributedString+Markdown.h"
-#ifdef __IPHONE_OS_VERSION_MIN_REQUIRED
+#if TARGET_OS_IPHONE
     #import <UIKit/UIKit.h>
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#else
     #import <AppKit/AppKit.h>
 #endif
 
@@ -186,7 +186,7 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
     self.listAttributes = @{NSParagraphStyleAttributeName: listParagraph};
     self.listItemAttributes = @{};
     
-#ifdef __IPHONE_OS_VERSION_MIN_REQUIRED
+#if TARGET_OS_IPHONE
     CGFloat defaultSize = [UIFont systemFontSize];
     self.font = [UIFont systemFontOfSize:defaultSize];
     self.textColor = [UIColor blackColor];
@@ -200,7 +200,7 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
         CGFloat size = originalFont.pointSize;
         return [UIFont boldSystemFontOfSize:size];
     };
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#else
     CGFloat defaultSize = [UIFont systemFontSize];
     self.font = [UIFont fontWithName:@"Helvetica" size:defaultSize];
     self.textColor = [UIColor blackColor];
