@@ -3,7 +3,8 @@
 
 #ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
 
-#import "NSFont+UIKitAdditions.h"
+#import <MarkdownParserMac/NSFont+UIKitAdditions.h>
+
 
 // Types
 #define UIImage			NSImage

@@ -15,7 +15,7 @@
 		3DE3BAAD1658FF9D00CE504F /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 3EB17EB2161F199900A27750 /* buffer.c */; };
 		3DE3BAAE1658FF9F00CE504F /* markdown.c in Sources */ = {isa = PBXBuildFile; fileRef = 3EB17EB3161F199900A27750 /* markdown.c */; };
 		3DE3BABA165901AC00CE504F /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DE3BAB9165901AC00CE504F /* AppKit.framework */; };
-		3DE3BABE165903B500CE504F /* NSFont+UIKitAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DE3BABC165903B500CE504F /* NSFont+UIKitAdditions.h */; };
+		3DE3BABE165903B500CE504F /* NSFont+UIKitAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DE3BABC165903B500CE504F /* NSFont+UIKitAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3DE3BABF165903B500CE504F /* NSFont+UIKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DE3BABD165903B500CE504F /* NSFont+UIKitAdditions.m */; };
 		3DE3BACE1659087100CE504F /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EB17E64161F17B200A27750 /* SenTestingKit.framework */; };
 		3DE3BAD61659087100CE504F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3BAD41659087100CE504F /* InfoPlist.strings */; };
@@ -913,6 +913,7 @@
 				3DE3BAA71658FF2E00CE504F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3DE3BADB1659087100CE504F /* Build configuration list for PBXNativeTarget "MarkdownParserMacTests" */ = {
 			isa = XCConfigurationList;
@@ -921,6 +922,7 @@
 				3DE3BADD1659087100CE504F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3EB17E36161F17B100A27750 /* Build configuration list for PBXProject "MarkdownParser" */ = {
 			isa = XCConfigurationList;
