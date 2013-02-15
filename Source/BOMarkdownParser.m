@@ -61,7 +61,7 @@ static void renderHeader(struct buf *ob, struct buf *text, int level, void *opaq
 static void renderList(struct buf *ob, struct buf *text, int flags, void *opaque);
 static void renderListitem(struct buf *ob, struct buf *text, int flags, void *opaque);
 static void renderParagraph(struct buf *ob, struct buf *text, void *opaque);
-//static int renderAutolink(struct buf *ob, struct buf *link, enum mkd_autolink type, void *opaque);
+static int renderAutolink(struct buf *ob, struct buf *link, enum mkd_autolink type, void *opaque);
 //static int renderCodespan(struct buf *ob, struct buf *text, void *opaque);
 static int renderDoubleEmphasis(struct buf *ob, struct buf *text, char c, void *opaque);
 static int renderEmphasis(struct buf *ob, struct buf *text, char c, void *opaque);
@@ -126,7 +126,7 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
     renderer.list = renderList;
     renderer.listitem = renderListitem;
     renderer.paragraph = renderParagraph;
-//    renderer.autolink = renderAutolink;
+    renderer.autolink = renderAutolink;
 //    renderer.codespan = renderCodespan;
     renderer.double_emphasis = renderDoubleEmphasis;
     renderer.emphasis = renderEmphasis;
@@ -324,11 +324,6 @@ static void renderParagraph(UNUSED struct buf *ob, struct buf *text, void * UNUS
     bufputc(ob, '\n');
 }
 
-//static int renderAutolink(UNUSED struct buf *ob, struct buf *link, enum mkd_autolink type, void *opaque)
-//{
-//    BOMarkdownParser * const parser = (__bridge BOMarkdownParser *) opaque;
-//}
-//
 //static int renderCodespan(UNUSED struct buf *ob, struct buf *text, void *opaque)
 //{
 //    BOMarkdownParser * const parser = (__bridge BOMarkdownParser *) opaque;
@@ -380,6 +375,24 @@ static int renderLink(UNUSED struct buf *ob, struct buf *linkBuffer, struct buf 
         bufput(ob, content->data, content->size);
     }
     return 1;
+}
+
+static int renderAutolink(UNUSED struct buf *ob, struct buf *linkBuffer, enum mkd_autolink type, void *opaque)
+{
+    struct buf *title = linkBuffer;
+    struct buf *link = linkBuffer;
+    struct buf *newLink = NULL;
+    if (type == MKDA_IMPLICIT_EMAIL) {
+        struct buf *newLink = bufnew(linkBuffer->size + 7);
+        bufputs(newLink, "mailto:");
+        bufput(newLink, linkBuffer->data, linkBuffer->size);
+        link = newLink;
+    }
+    int result = renderLink(ob, link, NULL, title, opaque);
+    if (newLink != NULL) {
+        bufrelease(newLink);
+    }
+    return result;
 }
 
 //static int renderRawHTMLTag(UNUSED struct buf *ob, struct buf *tag, void *opaque)
