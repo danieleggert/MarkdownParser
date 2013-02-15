@@ -26,7 +26,7 @@ NSString * const BOLinkAttributeName = @"BOLink";
 
 - (void)setupAttributes;
 - (void)preParseSetupAttributes;
-- (void)addAttribtuesToAttributedString:(NSMutableAttributedString *)output;
+- (void)addAttributesToAttributedString:(NSMutableAttributedString *)output;
 
 @end
 
@@ -61,7 +61,7 @@ static void renderHeader(struct buf *ob, struct buf *text, int level, void *opaq
 static void renderList(struct buf *ob, struct buf *text, int flags, void *opaque);
 static void renderListitem(struct buf *ob, struct buf *text, int flags, void *opaque);
 static void renderParagraph(struct buf *ob, struct buf *text, void *opaque);
-static int renderAutolink(struct buf *ob, struct buf *link, enum mkd_autolink type, void *opaque);
+//static int renderAutolink(struct buf *ob, struct buf *link, enum mkd_autolink type, void *opaque);
 //static int renderCodespan(struct buf *ob, struct buf *text, void *opaque);
 static int renderDoubleEmphasis(struct buf *ob, struct buf *text, char c, void *opaque);
 static int renderEmphasis(struct buf *ob, struct buf *text, char c, void *opaque);
@@ -79,9 +79,6 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
 @property (nonatomic, strong) NSMutableArray *links;
 @property (nonatomic) int listDepth;
 @property (nonatomic) int listItemIndex;
-
-@property (nonatomic, copy) NSArray *currentHeaderFontReplacementBlocks;
-@property (nonatomic, copy) NSArray *currentHeaderAttributes;;
 
 @end
 
@@ -108,7 +105,6 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
     if (input == nil) {
         return nil;
     }
-    NSDictionary *baseAttributes = @{NSFontAttributeName: self.font, NSForegroundColorAttributeName: self.textColor};
     
     [self preParseSetupAttributes];
     
@@ -126,7 +122,7 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
     renderer.list = renderList;
     renderer.listitem = renderListitem;
     renderer.paragraph = renderParagraph;
-    renderer.autolink = renderAutolink;
+//    renderer.autolink = renderAutolink;
 //    renderer.codespan = renderCodespan;
     renderer.double_emphasis = renderDoubleEmphasis;
     renderer.emphasis = renderEmphasis;
@@ -149,19 +145,17 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
     NSData *bufferData = [NSData dataWithBytes:outputBuffer->data length:outputBuffer->size];
     NSString *bufferString = [[NSString alloc] initWithData:bufferData encoding:NSUTF8StringEncoding];
     
-    NSMutableAttributedString *_output = [[NSMutableAttributedString alloc] init];
-    [_output appendAttributedString:[[NSAttributedString alloc] initWithString:bufferString attributes:baseAttributes]];
+    NSMutableAttributedString *outputText = [[NSMutableAttributedString alloc] init];
+    [outputText appendAttributedString:[[NSAttributedString alloc] initWithString:bufferString attributes:self.baseAttributes]];
     
-    [_output beginEditing];
-    [self addAttribtuesToAttributedString:_output];
-    [_output endEditing];
+    [outputText beginEditing];
+    [self addAttributesToAttributedString:outputText];
+    [outputText endEditing];
     
-    NSAttributedString *result = [_output copy];
-    _output = nil;
     bufrelease(outputBuffer);
     bufrelease(inputBuffer);
     
-    return result;
+    return outputText;
 }
 
 @end
@@ -179,23 +173,14 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
     NSMutableParagraphStyle *listParagraph = [[NSMutableParagraphStyle alloc] init];
     listParagraph.headIndent = 16.;
     listParagraph.firstLineHeadIndent = -16.;
-    self.listAttributes = @{NSParagraphStyleAttributeName: listParagraph};
-    self.listItemAttributes = @{};
+//    self.listAttributes = @[];
+//    self.listItemAttributes = @[];
     
-    self.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-    self.textColor = [UIColor blackColor];
+    self.baseAttributes = @{};
     
-    self.emphasizeFont = ^(UIFont *originalFont){
-        CGFloat size = originalFont.pointSize;
-        return [UIFont italicSystemFontOfSize:size];
-    };
-
-    self.doubleEmphasizeFont = ^(UIFont *originalFont){
-        CGFloat size = originalFont.pointSize;
-        return [UIFont boldSystemFontOfSize:size];
-    };
-    
-    self.replaceLinkFont = self.doubleEmphasizeFont;
+    self.emphasizeFont = nil;
+    self.doubleEmphasizeFont = nil;
+    self.replaceLinkFont = nil;
 }
 
 - (void)preParseSetupAttributes;
@@ -203,55 +188,29 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
     self.links = [NSMutableArray array];
     self.listDepth = 0;
     self.listItemIndex = 0;
-    
-    self.currentHeaderFontReplacementBlocks = self.headerFontReplacementBlocks;
-    if (self.currentHeaderFontReplacementBlocks == nil) {
-        BOFontReplacementBlock_t emph = self.doubleEmphasizeFont;
-        BOFontReplacementBlock_t header1 = ^(UIFont *font){
-            if (emph != nil) {
-                font = emph(font);
-            }
-            return [font fontWithSize:font.pointSize + 10];
-        };
-        BOFontReplacementBlock_t header2 = ^(UIFont *font){
-            if (emph != nil) {
-                font = emph(font);
-            }
-            return [font fontWithSize:font.pointSize + 6];
-        };
-        BOFontReplacementBlock_t header3 = ^(UIFont *font){
-            if (emph != nil) {
-                font = emph(font);
-            }
-            return [font fontWithSize:font.pointSize + 4];
-        };
-        self.currentHeaderFontReplacementBlocks = @[header1, header2, header3];
-    }
-    self.currentHeaderAttributes = self.headerAttributes;
 }
 
-- (void)addAttribtuesToAttributedString:(NSMutableAttributedString *)output;
+- (void)addAttributesToAttributedString:(NSMutableAttributedString *)output;
 {
-    [output updateFontAttributeInRangesWithStartMarker:startEmphMarker endMarker:endEmphMarker usingBlock:self.emphasizeFont];
-    [output updateFontAttributeInRangesWithStartMarker:startDoubleEmphMarker endMarker:endDoubleEmphMarker usingBlock:self.doubleEmphasizeFont];
+    [output replaceAttributesInRangeWithStartMarker:startEmphMarker endMarker:endEmphMarker withReplacementBlock:self.emphasizeFont];
+    [output replaceAttributesInRangeWithStartMarker:startDoubleEmphMarker endMarker:endDoubleEmphMarker withReplacementBlock:self.doubleEmphasizeFont];
     
-    [output addAttributesToRangeWithStartMarker:startLinkMarker endMarker:endLinkMarker usingAttributesBlock:^NSDictionary *(unichar marker){
+    [output addAttributesToRangeWithStartMarker:startLinkMarker endMarker:endLinkMarker markedAttributesBlock:^NSDictionary *(unichar marker){
         NSUInteger const linkIndex = (marker - linkOffset);
         if (linkIndex < [self.links count]) {
             id link = [self.links objectAtIndex:linkIndex];
-            return @{NSForegroundColorAttributeName: self.linkTextColor, BOLinkAttributeName: link};
+            return @{BOLinkAttributeName: link};
         } else {
             return nil;
         }
-    } fontBlock:self.replaceLinkFont];
+    } replacementBlock:self.replaceLinkFont];
     
-    [output addAttributes:self.listAttributes toRangeWithStartMarker:startListMarker[0] endMarker:endListMarker[0]];
-    [output addAttributes:self.listItemAttributes toRangeWithStartMarker:startListItemMarker[0] endMarker:endListItemMarker[0]];
+    [output replaceAttributesInRangeWithStartMarker:startListMarker[0] endMarker:endListMarker[0] withReplacementBlock:self.listAttributes];
+    [output replaceAttributesInRangeWithStartMarker:startListItemMarker[0] endMarker:endListItemMarker[0] withReplacementBlock:self.listItemAttributes];
     
     for (int level = 0; level < 6; ++level) {
-        NSDictionary *attributes = (level < (int) [self.currentHeaderAttributes count]) ? self.currentHeaderAttributes[level] : nil;
-        BOFontReplacementBlock_t fontBlock = (level < (int) [self.currentHeaderFontReplacementBlocks count]) ? self.currentHeaderFontReplacementBlocks[level] : nil;
-        [output addAttributes:attributes toRangeWithStartMarker:startHeaderMarker[level] endMarker:endHeaderMarker[level] fontBlock:fontBlock];
+        BOAttributesReplacementBlock_t attributesBlock = (level < (int) [self.headerAttributes count]) ? self.headerAttributes[level] : nil;
+        [output replaceAttributesInRangeWithStartMarker:startHeaderMarker[level] endMarker:endHeaderMarker[level] withReplacementBlock:attributesBlock];
     }
 }
 
@@ -324,6 +283,11 @@ static void renderParagraph(UNUSED struct buf *ob, struct buf *text, void * UNUS
     bufputc(ob, '\n');
 }
 
+//static int renderAutolink(UNUSED struct buf *ob, struct buf *link, enum mkd_autolink type, void *opaque)
+//{
+//    BOMarkdownParser * const parser = (__bridge BOMarkdownParser *) opaque;
+//}
+//
 //static int renderCodespan(UNUSED struct buf *ob, struct buf *text, void *opaque)
 //{
 //    BOMarkdownParser * const parser = (__bridge BOMarkdownParser *) opaque;
@@ -375,24 +339,6 @@ static int renderLink(UNUSED struct buf *ob, struct buf *linkBuffer, struct buf 
         bufput(ob, content->data, content->size);
     }
     return 1;
-}
-
-static int renderAutolink(UNUSED struct buf *ob, struct buf *linkBuffer, enum mkd_autolink type, void *opaque)
-{
-    struct buf *title = linkBuffer;
-    struct buf *link = linkBuffer;
-    struct buf *newLink = NULL;
-    if (type == MKDA_IMPLICIT_EMAIL) {
-        struct buf *newLink = bufnew(linkBuffer->size + 7);
-        bufputs(newLink, "mailto:");
-        bufput(newLink, linkBuffer->data, linkBuffer->size);
-        link = newLink;
-    }
-    int result = renderLink(ob, link, NULL, title, opaque);
-    if (newLink != NULL) {
-        bufrelease(newLink);
-    }
-    return result;
 }
 
 //static int renderRawHTMLTag(UNUSED struct buf *ob, struct buf *tag, void *opaque)

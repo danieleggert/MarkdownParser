@@ -16,13 +16,9 @@
 
 @implementation NSMutableAttributedString (BOMarkers)
 
-- (void)addAttributes:(NSDictionary *)attributes toRangeWithStartMarker:(NSString *)startMarker endMarker:(NSString *)endMarker;
+- (void)replaceAttributesInRangeWithStartMarker:(NSString *)startMarker endMarker:(NSString *)endMarker withReplacementBlock:(BOAttributesReplacementBlock_t)attributesBlock;
 {
-    [self addAttributes:attributes toRangeWithStartMarker:startMarker endMarker:endMarker fontBlock:nil];
-}
-
-- (void)addAttributes:(NSDictionary *)attributes toRangeWithStartMarker:(NSString *)startMarker endMarker:(NSString *)endMarker fontBlock:(BOFontReplacementBlock_t)fontBlock;
-{
+    NSCharacterSet *privateUse = [NSCharacterSet characterSetWithRange:NSMakeRange(0xe000, 0xf900 - 0xe000)];
     NSMutableString *string = [self mutableString];
     NSRange remainingRange = NSMakeRange(0, [string length]);
     while (0 < remainingRange.length) {
@@ -41,24 +37,32 @@
                 [string replaceCharactersInRange:startRange withString:@""];
                 remainingRange.location -= startRange.length + endRange.length;
                 // Set style:
-                NSRange styleRange = NSMakeRange(startRange.location, endRange.location - startRange.location - startRange.length);
-                if (attributes != nil) {
-                    [self addAttributes:attributes range:styleRange];
-                }
-                if (fontBlock != nil) {
-                    [self enumerateAttribute:NSFontAttributeName inRange:styleRange options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(UIFont *originalFont, NSRange fontRange, BOOL *stop)
-                     {
-                         (void) stop;
-                         UIFont *newFont = fontBlock(originalFont);
-                         [self addAttributes:@{NSFontAttributeName: newFont} range:fontRange];
-                     }];
+                if (attributesBlock != nil) {
+                    NSRange styleRange = NSMakeRange(startRange.location, endRange.location - startRange.location - startRange.length);
+                    // Don't include trailing '\n':
+                    while (0 < styleRange.length) {
+                        unichar c = [string characterAtIndex:NSMaxRange(styleRange) - 1];
+                        if ([privateUse characterIsMember:c]) {
+                            styleRange.length -= 1;
+                        } else if (c == '\n') {
+                            styleRange.length -= 1;
+                            break;
+                        } else {
+                            break;
+                        }
+                    }
+                    [self enumerateAttributesInRange:styleRange options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(NSDictionary *originalAttributes, NSRange range, BOOL *stop) {
+                        (void) stop;
+                        NSDictionary *newAttributes = attributesBlock(originalAttributes);
+                        [self setAttributes:newAttributes range:range];
+                    }];
                 }
             }
         }
     }
 }
 
-- (void)addAttributesToRangeWithStartMarker:(NSString *)startMarker endMarker:(NSString *)endMarker usingAttributesBlock:(NSDictionary * (^)(unichar marker))block fontBlock:(BOFontReplacementBlock_t)fontBlock;
+- (void)addAttributesToRangeWithStartMarker:(NSString *)startMarker endMarker:(NSString *)endMarker markedAttributesBlock:(NSDictionary * (^)(unichar marker))markBlock replacementBlock:(BOAttributesReplacementBlock_t)attributesBlock;
 {
     NSMutableString *string = [self mutableString];
     NSRange remainingRange = NSMakeRange(0, [string length]);
@@ -82,16 +86,15 @@
                 remainingRange.location -= startRange.length + endRange.length;
                 // Set style:
                 NSRange styleRange = NSMakeRange(startRange.location, endRange.location - startRange.location - startRange.length);
-                NSDictionary *attributes = block(marker);
+                NSDictionary *attributes = markBlock(marker);
                 if (attributes != nil) {
                     [self addAttributes:attributes range:styleRange];
                 }
-                if (fontBlock != nil) {
-                    [self enumerateAttribute:NSFontAttributeName inRange:styleRange options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(UIFont *originalFont, NSRange range, BOOL *stop)
-                    {
+                if (attributesBlock != nil) {
+                    [self enumerateAttributesInRange:styleRange options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(NSDictionary *originalAttributes, NSRange range, BOOL *stop) {
                         (void) stop;
-                        UIFont *newFont = fontBlock(originalFont);
-                        [self addAttributes:@{NSFontAttributeName: newFont} range:range];
+                        NSDictionary *newAttributes = attributesBlock(originalAttributes);
+                        [self setAttributes:newAttributes range:range];
                     }];
                 }
             }
@@ -127,16 +130,6 @@
             }
         }
     }
-}
-
-- (void)updateFontAttributeInRangesWithStartMarker:(NSString *)startMarker endMarker:(NSString *)endMarker usingBlock:(BOFontReplacementBlock_t)block;
-{
-    [self enumerateAttribute:NSFontAttributeName inRangesWithStartMarker:startMarker endMarker:endMarker usingBlock:^(UIFont *originalFont, NSRange range) {
-        UIFont *newFont = block(originalFont);
-        if (newFont != nil) {
-            [self addAttributes:@{NSFontAttributeName: newFont} range:range];
-        }
-    }];
 }
 
 @end

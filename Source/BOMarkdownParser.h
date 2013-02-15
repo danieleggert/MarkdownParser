@@ -14,7 +14,8 @@
 
 extern NSString * const BOLinkAttributeName;
 
-typedef UIFont * (^BOFontReplacementBlock_t)(UIFont *oldFont);
+typedef NSDictionary * (^BOAttributesReplacementBlock_t)(NSDictionary *oldAttributes);
+
 
 
 __attribute__((visibility("default")))
@@ -22,22 +23,19 @@ __attribute__((visibility("default")))
 
 + (instancetype)parser;
 
-@property (nonatomic, strong) UIFont *font;
-@property (nonatomic, strong) UIColor *textColor;
-@property (nonatomic, strong) NSMutableParagraphStyle *paragraphStyle;
+@property (nonatomic, copy) NSDictionary *baseAttributes;
 
 @property (nonatomic, copy) NSString *unorderedListBullet;
 @property (nonatomic, copy) NSString *(^listNumberFromIndex)(int const itemIndex);
-@property (nonatomic, copy) NSDictionary *listAttributes;
-@property (nonatomic, copy) NSDictionary *listItemAttributes;
+@property (nonatomic, copy) BOAttributesReplacementBlock_t listAttributes;
+@property (nonatomic, copy) BOAttributesReplacementBlock_t listItemAttributes;
 
-@property (nonatomic, copy) BOFontReplacementBlock_t emphasizeFont;
-@property (nonatomic, copy) BOFontReplacementBlock_t doubleEmphasizeFont;
-@property (nonatomic, strong) UIColor *linkTextColor;
-@property (nonatomic, copy) BOFontReplacementBlock_t replaceLinkFont;
+@property (nonatomic, copy) BOAttributesReplacementBlock_t emphasizeFont;
+@property (nonatomic, copy) BOAttributesReplacementBlock_t doubleEmphasizeFont;
+@property (nonatomic, copy) BOAttributesReplacementBlock_t linkTextColor;
+@property (nonatomic, copy) BOAttributesReplacementBlock_t replaceLinkFont;
 
-/** For header levels 1 - 6 */
-@property (nonatomic, copy) NSArray *headerFontReplacementBlocks;
+/** For header levels 1 - 6. Array of BOAttributesReplacementBlock_t instances. */
 @property (nonatomic, copy) NSArray *headerAttributes;
 
 - (NSAttributedString *)parseString:(NSString *)input;
