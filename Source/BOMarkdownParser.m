@@ -40,6 +40,12 @@ static NSString * const endDoubleEmphMarker = @"\U0000f803";
 static NSString * const startLinkMarker = @"\U0000f804";
 static NSString * const endLinkMarker = @"\U0000f805";
 
+static NSString * const startImageMarker = @"\U0000f806";
+static NSString * const endImageMarker = @"\U0000f807";
+
+static NSString * const startImageTitleMarker = @"\U0000f808";
+static NSString * const endImageTitleMarker = @"\U0000f809";
+
 // We use these for multiple indentation
 static NSString * const startListMarker[] = {@"\U0000f810", @"\U0000f811", @"\U0000f812"};
 static NSString * const endListMarker[] = {@"\U0000f820", @"\U0000f821", @"\U0000f822"};
@@ -51,6 +57,7 @@ static NSString * const startHeaderMarker[] = {@"\U0000f830", @"\U0000f831", @"\
 static NSString * const endHeaderMarker[] = {@"\U0000f840", @"\U0000f841", @"\U0000f842", @"\U0000f843", @"\U0000f844", @"\U0000f845"};
 
 static unichar const linkOffset = 0x0000f400;
+static unichar const imageOffset = 0x0000f500;
 
 
 //static void renderBlockcode(struct buf *ob, struct buf *text, void *opaque);
@@ -65,7 +72,7 @@ static int renderAutolink(struct buf *ob, struct buf *link, enum mkd_autolink ty
 //static int renderCodespan(struct buf *ob, struct buf *text, void *opaque);
 static int renderDoubleEmphasis(struct buf *ob, struct buf *text, char c, void *opaque);
 static int renderEmphasis(struct buf *ob, struct buf *text, char c, void *opaque);
-//static int renderImage(struct buf *ob, struct buf *link, struct buf *title, struct buf *alt, void *opaque);
+static int renderImage(struct buf *ob, struct buf *link, struct buf *title, struct buf *alt, void *opaque);
 static int renderLinebreak(struct buf *ob, void *opaque);
 static int renderLink(struct buf *ob, struct buf *linkBuffer, struct buf *title, struct buf *content, void *opaque);
 //static int renderRawHTMLTag(struct buf *ob, struct buf *tag, void *opaque);
@@ -77,6 +84,7 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
 @interface BOMarkdownParser ()
 
 @property (nonatomic, strong) NSMutableArray *links;
+@property (nonatomic, strong) NSMutableArray *images;
 @property (nonatomic) int listDepth;
 @property (nonatomic) int listItemIndex;
 
@@ -126,7 +134,7 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
 //    renderer.codespan = renderCodespan;
     renderer.double_emphasis = renderDoubleEmphasis;
     renderer.emphasis = renderEmphasis;
-//    renderer.image = renderImage;
+    renderer.image = renderImage;
     renderer.linebreak = renderLinebreak;
     renderer.link = renderLink;
 //    renderer.raw_html_tag = renderRawHTMLTag;
@@ -186,6 +194,7 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
 - (void)preParseSetupAttributes;
 {
     self.links = [NSMutableArray array];
+    self.images = [NSMutableArray array];
     self.listDepth = 0;
     self.listItemIndex = 0;
 }
@@ -204,6 +213,18 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
             return nil;
         }
     } replacementBlock:self.replaceLinkFont];
+    
+    [output addAttributesToRangeWithStartMarker:startImageMarker endMarker:endImageMarker markedAttributesBlock:^NSDictionary *(unichar marker){
+        NSUInteger const imageIndex = (marker - imageOffset);
+        if ((imageIndex < [self.images count]) && (self.insertImage != nil)) {
+            BOMarkdownParserImage *image = self.images[imageIndex];
+            return self.insertImage(image);
+        } else {
+            return nil;
+        }
+    } replacementBlock:nil];
+    
+    [output replaceAttributesInRangeWithStartMarker:startImageTitleMarker endMarker:endImageTitleMarker withReplacementBlock:self.imageTitleAttributes];
     
     [output replaceAttributesInRangeWithStartMarker:startListMarker[0] endMarker:endListMarker[0] withReplacementBlock:self.listAttributes];
     [output replaceAttributesInRangeWithStartMarker:startListItemMarker[0] endMarker:endListItemMarker[0] withReplacementBlock:self.listItemAttributes];
@@ -304,10 +325,39 @@ static int renderEmphasis(UNUSED struct buf *ob, struct buf *text, char UNUSED c
     return 1;
 }
 
-//static int renderImage(UNUSED struct buf *ob, struct buf *link, struct buf *title, struct buf *alt, void *opaque)
-//{
-//    BOMarkdownParser * const parser = (__bridge BOMarkdownParser *) opaque;
-//}
+static int renderImage(UNUSED struct buf *ob, struct buf *linkBuffer, struct buf *title, struct buf *alt, void *opaque)
+{
+    NSData *linkData = [NSData dataWithBytes:linkBuffer->data length:linkBuffer->size];
+    NSString *linkString = [[NSString alloc] initWithData:linkData encoding:NSUTF8StringEncoding];
+    if (linkString != nil) {
+        BOMarkdownParserImage *image = [[BOMarkdownParserImage alloc] init];
+        image.link = linkString;
+        
+        NSData *altData = [NSData dataWithBytes:alt->data length:alt->size];
+        NSString *altString = [[NSString alloc] initWithData:altData encoding:NSUTF8StringEncoding];
+        image.alt = altString;
+        
+        BOMarkdownParser * const parser = (__bridge BOMarkdownParser *) opaque;
+        
+        [parser.images addObject:image];
+        
+        unichar const imageMarker = imageOffset + (unichar)([parser.images count]) - 1;
+        NSString *startMarker = [startImageMarker stringByAppendingString:[[NSString alloc] initWithCharacters:(const unichar []){imageMarker} length:1]];
+        bufputs(ob, [startMarker UTF8String]);
+        bufputs(ob, [@" " UTF8String]); // zero width space
+        bufputs(ob, [endImageMarker UTF8String]);
+        
+        if ((title != NULL) && (0 < title->size)) {
+            bufputc(ob, '\n');
+            bufputs(ob, [startImageTitleMarker UTF8String]);
+            bufput(ob, title->data, title->size);
+            bufputs(ob, [endImageTitleMarker UTF8String]);
+        }
+    } else {
+        NSLog(@"Unable to add image.");
+    }
+    return 1;
+}
 
 static int renderLinebreak(struct buf *ob, void * UNUSED opaque)
 {
@@ -373,3 +423,7 @@ static void renderNormalText(struct buf *ob, struct buf *text, void * UNUSED opa
 {
     bufput(ob, text->data, text->size);
 }
+
+
+@implementation BOMarkdownParserImage
+@end

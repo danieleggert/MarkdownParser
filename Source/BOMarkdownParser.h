@@ -11,10 +11,14 @@
 @class UIFont;
 @class UIColor;
 @class NSMutableParagraphStyle;
+@class BOMarkdownParserImage;
+
+
 
 extern NSString * const BOLinkAttributeName;
 
 typedef NSDictionary * (^BOAttributesReplacementBlock_t)(NSDictionary *oldAttributes);
+typedef NSDictionary * (^BOImageAttributesBlock_t)(BOMarkdownParserImage *image);
 
 
 
@@ -35,9 +39,21 @@ __attribute__((visibility("default")))
 @property (nonatomic, copy) BOAttributesReplacementBlock_t linkTextColor;
 @property (nonatomic, copy) BOAttributesReplacementBlock_t replaceLinkFont;
 
+@property (nonatomic, copy) BOImageAttributesBlock_t insertImage;
+@property (nonatomic, copy) BOAttributesReplacementBlock_t imageTitleAttributes;
+
 /** For header levels 1 - 6. Array of BOAttributesReplacementBlock_t instances. */
 @property (nonatomic, copy) NSArray *headerAttributes;
 
 - (NSAttributedString *)parseString:(NSString *)input;
+
+@end
+
+
+
+@interface BOMarkdownParserImage : NSObject
+
+@property (nonatomic, copy) NSString *link;
+@property (nonatomic, copy) NSString *alt;
 
 @end
