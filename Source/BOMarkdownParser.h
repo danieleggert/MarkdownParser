@@ -36,7 +36,6 @@ __attribute__((visibility("default")))
 
 @property (nonatomic, copy) BOAttributesReplacementBlock_t emphasizeFont;
 @property (nonatomic, copy) BOAttributesReplacementBlock_t doubleEmphasizeFont;
-@property (nonatomic, copy) BOAttributesReplacementBlock_t linkTextColor;
 @property (nonatomic, copy) BOAttributesReplacementBlock_t replaceLinkFont;
 
 @property (nonatomic, copy) BOImageAttributesBlock_t insertImage;
