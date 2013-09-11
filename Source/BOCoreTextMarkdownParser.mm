@@ -22,6 +22,8 @@
         return nil;
     }
     
+    [result beginEditing];
+    
     NSUInteger location = 0;
     NSUInteger length = [result length];
     while (location < length) {
@@ -66,6 +68,16 @@
         }
         location = NSMaxRange(linebreak);
     }
+    
+    // Remove trailing new lines:
+    {
+        NSMutableString *mutableText = result.mutableString;
+        while ((0 < [mutableText length]) && [mutableText hasSuffix:@"\n"]) {
+            [mutableText replaceCharactersInRange:NSMakeRange([mutableText length] - 1, 1) withString:@""];
+        }
+    }
+    
+    [result endEditing];
     return result;
 }
 

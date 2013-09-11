@@ -56,3 +56,11 @@ __attribute__((visibility("default")))
 @property (nonatomic, copy) NSString *alt;
 
 @end
+
+
+
+@interface BOMarkdownParser (Subclassing)
+
+- (void)preParseSetupAttributes;
+
+@end

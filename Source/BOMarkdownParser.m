@@ -255,11 +255,15 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
 
 static void renderHeader(UNUSED struct buf *ob, struct buf *text, int level, void * UNUSED opaque)
 {
-    level = MAX(MIN(level - 1, 5), 0);
-    bufputs(ob, [startHeaderMarker[level] UTF8String]);
+    int const levelCount = (int) (sizeof(startHeaderMarker) / sizeof(*startHeaderMarker));
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wshadow"
+    int const clampedLevel = MAX(MIN(level - 1, levelCount - 1), 0);
+#pragma clang diagnostic pop
+    bufputs(ob, [startHeaderMarker[clampedLevel] UTF8String]);
     bufput(ob, text->data, text->size);
     bufputc(ob, '\n');
-    bufputs(ob, [endHeaderMarker[level] UTF8String]);
+    bufputs(ob, [endHeaderMarker[clampedLevel] UTF8String]);
 }
 
 //static void renderHrule(UNUSED struct buf *ob, void *opaque)
@@ -371,7 +375,7 @@ static int renderAutolink(UNUSED struct buf *ob, struct buf *linkBuffer, enum mk
     struct buf *link = linkBuffer;
     struct buf *newLink = NULL;
     if (type == MKDA_IMPLICIT_EMAIL) {
-        struct buf *newLink = bufnew(linkBuffer->size + 7);
+        newLink = bufnew(linkBuffer->size + 7);
         bufputs(newLink, "mailto:");
         bufput(newLink, linkBuffer->data, linkBuffer->size);
         link = newLink;
