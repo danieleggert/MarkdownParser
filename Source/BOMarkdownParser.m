@@ -18,10 +18,6 @@
 
 
 
-NSString * const BOLinkAttributeName = @"BOLink";
-
-
-
 @interface BOMarkdownParser (Private)
 
 - (void)setupAttributes;
@@ -166,6 +162,16 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
     return outputText;
 }
 
+- (NSString *)linkAttributeName;
+{
+    return @"BOLink";
+}
+
+- (NSURL *)linkURLFromLinkString:(NSString *)linkString;
+{
+    return (linkString == nil) ? nil : [NSURL URLWithString:linkString];
+}
+
 @end
 
 
@@ -208,7 +214,7 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
         NSUInteger const linkIndex = (marker - linkOffset);
         if (linkIndex < [self.links count]) {
             id link = [self.links objectAtIndex:linkIndex];
-            return @{BOLinkAttributeName: link};
+            return @{self.linkAttributeName: link};
         } else {
             return nil;
         }
@@ -393,7 +399,7 @@ static int renderLink(UNUSED struct buf *ob, struct buf *linkBuffer, struct buf 
     NSString *linkString = [[NSString alloc] initWithData:linkData encoding:NSUTF8StringEncoding];
     if (linkString != nil) {
         BOMarkdownParser * const parser = (__bridge BOMarkdownParser *) opaque;
-        NSURL *link = [NSURL URLWithString:linkString];
+        NSURL *link = [parser linkURLFromLinkString:linkString];
         [parser.links addObject:(link == nil) ? linkString : link];
         
         unichar const linkMarker = linkOffset + (unichar)([parser.links count]) - 1;

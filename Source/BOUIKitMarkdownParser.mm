@@ -42,6 +42,19 @@
     [super preParseSetupAttributes];
 }
 
+- (NSString *)linkAttributeName;
+{
+    return NSLinkAttributeName;
+}
+
+- (NSURL *)linkURLFromLinkString:(NSString *)linkString;
+{
+    if ([linkString hasPrefix:@"/"]) {
+        linkString = [@"minibar:/" stringByAppendingString:linkString];
+    }
+    return [super linkURLFromLinkString:linkString];
+}
+
 + (BOAttributesReplacementBlock_t)attributesReplacementByChangingFont:(UIFont *)font;
 {
     return [self attributesReplacementByChangingFont:font textColor:nil];

@@ -15,8 +15,6 @@
 
 
 
-extern NSString * const BOLinkAttributeName;
-
 typedef NSDictionary * (^BOAttributesReplacementBlock_t)(NSDictionary *oldAttributes);
 typedef NSDictionary * (^BOImageAttributesBlock_t)(BOMarkdownParserImage *image);
 
@@ -62,5 +60,7 @@ __attribute__((visibility("default")))
 @interface BOMarkdownParser (Subclassing)
 
 - (void)preParseSetupAttributes;
+@property (readonly, nonatomic, copy) NSString * linkAttributeName;
+- (NSURL *)linkURLFromLinkString:(NSString *)linkString;
 
 @end
