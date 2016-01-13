@@ -7,6 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3DE3BAA01658FF2E00CE504F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3BA9E1658FF2E00CE504F /* InfoPlist.strings */; };
+		3DE3BAA91658FF9000CE504F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DE3BAA81658FF9000CE504F /* Foundation.framework */; };
+		3DE3BAAA1658FF9500CE504F /* BOMarkdownParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EB17E9C161F187D00A27750 /* BOMarkdownParser.m */; };
+		3DE3BAAB1658FF9800CE504F /* NSAttributedString+Markdown.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EB17EBE161F1A8700A27750 /* NSAttributedString+Markdown.m */; };
+		3DE3BAAC1658FF9B00CE504F /* array.c in Sources */ = {isa = PBXBuildFile; fileRef = 3EB17EB1161F199900A27750 /* array.c */; };
+		3DE3BAAD1658FF9D00CE504F /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 3EB17EB2161F199900A27750 /* buffer.c */; };
+		3DE3BAAE1658FF9F00CE504F /* markdown.c in Sources */ = {isa = PBXBuildFile; fileRef = 3EB17EB3161F199900A27750 /* markdown.c */; };
+		3DE3BABA165901AC00CE504F /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DE3BAB9165901AC00CE504F /* AppKit.framework */; };
+		3DE3BABE165903B500CE504F /* NSFont+UIKitAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DE3BABC165903B500CE504F /* NSFont+UIKitAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3DE3BABF165903B500CE504F /* NSFont+UIKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DE3BABD165903B500CE504F /* NSFont+UIKitAdditions.m */; };
+		3DE3BACE1659087100CE504F /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EB17E64161F17B200A27750 /* SenTestingKit.framework */; };
+		3DE3BAD61659087100CE504F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3BAD41659087100CE504F /* InfoPlist.strings */; };
+		3DE3BAE0165908D800CE504F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DE3BAA81658FF9000CE504F /* Foundation.framework */; };
+		3DE3BAE1165908DD00CE504F /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DE3BAB9165901AC00CE504F /* AppKit.framework */; };
+		3DE3BAE2165908E900CE504F /* MarkdownParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EB17E71161F17B200A27750 /* MarkdownParserTests.m */; };
+		3DE3BB0A1659097400CE504F /* BOMarkdownParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EB17E9B161F187D00A27750 /* BOMarkdownParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3DE3BB0B16590AEA00CE504F /* OS-X-ObjC-Compatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DE3BA881658FADD00CE504F /* OS-X-ObjC-Compatibility.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3DE3BB0D16590C4600CE504F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DE3BB0C16590C4600CE504F /* Cocoa.framework */; };
+		3DE3BB0E16590C7E00CE504F /* MarkdownParserMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DE3BA941658FF2E00CE504F /* MarkdownParserMac.framework */; };
 		3EB17E41161F17B100A27750 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EB17E40161F17B100A27750 /* UIKit.framework */; };
 		3EB17E43161F17B100A27750 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EB17E42161F17B100A27750 /* Foundation.framework */; };
 		3EB17E45161F17B100A27750 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EB17E44161F17B100A27750 /* CoreGraphics.framework */; };
@@ -33,6 +52,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		3DE3BADE165908C000CE504F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3EB17E33161F17B100A27750 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3DE3BA931658FF2E00CE504F;
+			remoteInfo = MarkdownParserMac;
+		};
 		3E575BDB161F29FF00286500 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3EB17E33161F17B100A27750 /* Project object */;
@@ -62,6 +88,23 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3DE3BA881658FADD00CE504F /* OS-X-ObjC-Compatibility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "OS-X-ObjC-Compatibility.h"; path = "Source/OS-X-ObjC-Compatibility.h"; sourceTree = SOURCE_ROOT; };
+		3DE3BA941658FF2E00CE504F /* MarkdownParserMac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MarkdownParserMac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3DE3BA981658FF2E00CE504F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		3DE3BA991658FF2E00CE504F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		3DE3BA9A1658FF2E00CE504F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3DE3BA9D1658FF2E00CE504F /* MarkdownParserMac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MarkdownParserMac-Info.plist"; sourceTree = "<group>"; };
+		3DE3BA9F1658FF2E00CE504F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3DE3BAA11658FF2E00CE504F /* MarkdownParserMac-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MarkdownParserMac-Prefix.pch"; sourceTree = "<group>"; };
+		3DE3BAA81658FF9000CE504F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		3DE3BAB9165901AC00CE504F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
+		3DE3BABC165903B500CE504F /* NSFont+UIKitAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFont+UIKitAdditions.h"; sourceTree = "<group>"; };
+		3DE3BABD165903B500CE504F /* NSFont+UIKitAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFont+UIKitAdditions.m"; sourceTree = "<group>"; };
+		3DE3BACD1659087100CE504F /* MarkdownParserMacTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarkdownParserMacTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3DE3BAD31659087100CE504F /* MarkdownParserMacTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MarkdownParserMacTests-Info.plist"; sourceTree = "<group>"; };
+		3DE3BAD51659087100CE504F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3DE3BADA1659087100CE504F /* MarkdownParserMacTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MarkdownParserMacTests-Prefix.pch"; sourceTree = "<group>"; };
+		3DE3BB0C16590C4600CE504F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		3E575BDD161F30EF00286500 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		3EB17E3C161F17B100A27750 /* MarkdownParserApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarkdownParserApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EB17E40161F17B100A27750 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -71,7 +114,7 @@
 		3EB17E64161F17B200A27750 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		3EB17E6C161F17B200A27750 /* MarkdownParserTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MarkdownParserTests-Info.plist"; sourceTree = "<group>"; };
 		3EB17E6E161F17B200A27750 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3EB17E71161F17B200A27750 /* MarkdownParserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MarkdownParserTests.m; sourceTree = "<group>"; };
+		3EB17E71161F17B200A27750 /* MarkdownParserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MarkdownParserTests.m; sourceTree = "<group>"; usesTabs = 0; };
 		3EB17E82161F184D00A27750 /* BOAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOAppDelegate.h; sourceTree = "<group>"; };
 		3EB17E83161F184D00A27750 /* BOAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOAppDelegate.m; sourceTree = "<group>"; };
 		3EB17E84161F184D00A27750 /* BOViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOViewController.h; sourceTree = "<group>"; };
@@ -84,8 +127,8 @@
 		3EB17E8E161F184D00A27750 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3EB17E8F161F184D00A27750 /* MarkdownParser-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MarkdownParser-Info.plist"; sourceTree = "<group>"; };
 		3EB17E9A161F187D00A27750 /* MarkdownParser-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MarkdownParser-Prefix.pch"; path = "Source/MarkdownParser-Prefix.pch"; sourceTree = SOURCE_ROOT; };
-		3EB17E9B161F187D00A27750 /* BOMarkdownParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BOMarkdownParser.h; path = Source/BOMarkdownParser.h; sourceTree = SOURCE_ROOT; };
-		3EB17E9C161F187D00A27750 /* BOMarkdownParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = BOMarkdownParser.m; path = Source/BOMarkdownParser.m; sourceTree = SOURCE_ROOT; };
+		3EB17E9B161F187D00A27750 /* BOMarkdownParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BOMarkdownParser.h; path = Source/BOMarkdownParser.h; sourceTree = SOURCE_ROOT; usesTabs = 0; };
+		3EB17E9C161F187D00A27750 /* BOMarkdownParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = BOMarkdownParser.m; path = Source/BOMarkdownParser.m; sourceTree = SOURCE_ROOT; usesTabs = 0; };
 		3EB17EA1161F189F00A27750 /* libMarkdownParser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMarkdownParser.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EB17EB1161F199900A27750 /* array.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = array.c; sourceTree = "<group>"; };
 		3EB17EB2161F199900A27750 /* buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = buffer.c; sourceTree = "<group>"; };
@@ -93,13 +136,34 @@
 		3EB17EBA161F19B100A27750 /* array.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = array.h; sourceTree = "<group>"; };
 		3EB17EBB161F19B100A27750 /* buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
 		3EB17EBC161F19B100A27750 /* markdown.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = markdown.h; sourceTree = "<group>"; };
-		3EB17EBD161F1A8700A27750 /* NSAttributedString+Markdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+Markdown.h"; path = "Source/NSAttributedString+Markdown.h"; sourceTree = SOURCE_ROOT; };
-		3EB17EBE161F1A8700A27750 /* NSAttributedString+Markdown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+Markdown.m"; path = "Source/NSAttributedString+Markdown.m"; sourceTree = SOURCE_ROOT; };
+		3EB17EBD161F1A8700A27750 /* NSAttributedString+Markdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+Markdown.h"; path = "Source/NSAttributedString+Markdown.h"; sourceTree = SOURCE_ROOT; usesTabs = 0; };
+		3EB17EBE161F1A8700A27750 /* NSAttributedString+Markdown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+Markdown.m"; path = "Source/NSAttributedString+Markdown.m"; sourceTree = SOURCE_ROOT; usesTabs = 0; };
 		3EC9321816629BB300DDB33D /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		3EC9321916629BD600DDB33D /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3DE3BA901658FF2E00CE504F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DE3BABA165901AC00CE504F /* AppKit.framework in Frameworks */,
+				3DE3BAA91658FF9000CE504F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3DE3BAC91659087100CE504F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DE3BB0E16590C7E00CE504F /* MarkdownParserMac.framework in Frameworks */,
+				3DE3BB0D16590C4600CE504F /* Cocoa.framework in Frameworks */,
+				3DE3BAE1165908DD00CE504F /* AppKit.framework in Frameworks */,
+				3DE3BAE0165908D800CE504F /* Foundation.framework in Frameworks */,
+				3DE3BACE1659087100CE504F /* SenTestingKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3EB17E39161F17B100A27750 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -132,6 +196,65 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3DE3BA971658FF2E00CE504F /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3DE3BA981658FF2E00CE504F /* AppKit.framework */,
+				3DE3BA991658FF2E00CE504F /* CoreData.framework */,
+				3DE3BA9A1658FF2E00CE504F /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		3DE3BA9B1658FF2E00CE504F /* MarkdownParserMac */ = {
+			isa = PBXGroup;
+			children = (
+				3DE3BA881658FADD00CE504F /* OS-X-ObjC-Compatibility.h */,
+				3DE3BABC165903B500CE504F /* NSFont+UIKitAdditions.h */,
+				3DE3BABD165903B500CE504F /* NSFont+UIKitAdditions.m */,
+				3DE3BA9C1658FF2E00CE504F /* Supporting Files */,
+			);
+			path = MarkdownParserMac;
+			sourceTree = "<group>";
+		};
+		3DE3BA9C1658FF2E00CE504F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3DE3BA9D1658FF2E00CE504F /* MarkdownParserMac-Info.plist */,
+				3DE3BA9E1658FF2E00CE504F /* InfoPlist.strings */,
+				3DE3BAA11658FF2E00CE504F /* MarkdownParserMac-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3DE3BABB165901C100CE504F /* Mac */ = {
+			isa = PBXGroup;
+			children = (
+				3DE3BAB9165901AC00CE504F /* AppKit.framework */,
+				3DE3BB0C16590C4600CE504F /* Cocoa.framework */,
+				3DE3BAA81658FF9000CE504F /* Foundation.framework */,
+			);
+			name = Mac;
+			sourceTree = "<group>";
+		};
+		3DE3BAD11659087100CE504F /* MarkdownParserMacTests */ = {
+			isa = PBXGroup;
+			children = (
+				3DE3BAD21659087100CE504F /* Supporting Files */,
+			);
+			path = MarkdownParserMacTests;
+			sourceTree = "<group>";
+		};
+		3DE3BAD21659087100CE504F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3DE3BAD31659087100CE504F /* MarkdownParserMacTests-Info.plist */,
+				3DE3BAD41659087100CE504F /* InfoPlist.strings */,
+				3DE3BADA1659087100CE504F /* MarkdownParserMacTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		3EB17E31161F17B100A27750 = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +264,8 @@
 				3EB17EB0161F197500A27750 /* libupskirt */,
 				3EB17E81161F183800A27750 /* App */,
 				3EB17E6A161F17B200A27750 /* Tests */,
+				3DE3BA9B1658FF2E00CE504F /* MarkdownParserMac */,
+				3DE3BAD11659087100CE504F /* MarkdownParserMacTests */,
 				3EB17E3F161F17B100A27750 /* Frameworks */,
 				3EB17E3D161F17B100A27750 /* Products */,
 			);
@@ -152,6 +277,8 @@
 				3EB17E3C161F17B100A27750 /* MarkdownParserApp.app */,
 				3EB17E63161F17B200A27750 /* MarkdownParserTests.octest */,
 				3EB17EA1161F189F00A27750 /* libMarkdownParser.a */,
+				3DE3BA941658FF2E00CE504F /* MarkdownParserMac.framework */,
+				3DE3BACD1659087100CE504F /* MarkdownParserMacTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -159,10 +286,12 @@
 		3EB17E3F161F17B100A27750 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3DE3BABB165901C100CE504F /* Mac */,
 				3EB17E40161F17B100A27750 /* UIKit.framework */,
 				3EB17E42161F17B100A27750 /* Foundation.framework */,
 				3EB17E44161F17B100A27750 /* CoreGraphics.framework */,
 				3EB17E64161F17B200A27750 /* SenTestingKit.framework */,
+				3DE3BA971658FF2E00CE504F /* Other Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -241,7 +370,57 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		3DE3BA911658FF2E00CE504F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DE3BB0A1659097400CE504F /* BOMarkdownParser.h in Headers */,
+				3DE3BB0B16590AEA00CE504F /* OS-X-ObjC-Compatibility.h in Headers */,
+				3DE3BABE165903B500CE504F /* NSFont+UIKitAdditions.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		3DE3BA931658FF2E00CE504F /* MarkdownParserMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3DE3BAA51658FF2E00CE504F /* Build configuration list for PBXNativeTarget "MarkdownParserMac" */;
+			buildPhases = (
+				3DE3BA8F1658FF2E00CE504F /* Sources */,
+				3DE3BA901658FF2E00CE504F /* Frameworks */,
+				3DE3BA911658FF2E00CE504F /* Headers */,
+				3DE3BA921658FF2E00CE504F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MarkdownParserMac;
+			productName = MarkdownParserMac;
+			productReference = 3DE3BA941658FF2E00CE504F /* MarkdownParserMac.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		3DE3BACC1659087100CE504F /* MarkdownParserMacTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3DE3BADB1659087100CE504F /* Build configuration list for PBXNativeTarget "MarkdownParserMacTests" */;
+			buildPhases = (
+				3DE3BAC81659087100CE504F /* Sources */,
+				3DE3BAC91659087100CE504F /* Frameworks */,
+				3DE3BACA1659087100CE504F /* Resources */,
+				3DE3BACB1659087100CE504F /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3DE3BADF165908C000CE504F /* PBXTargetDependency */,
+			);
+			name = MarkdownParserMacTests;
+			productName = MarkdownParserMacTests;
+			productReference = 3DE3BACD1659087100CE504F /* MarkdownParserMacTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
 		3EB17E3B161F17B100A27750 /* MarkdownParserApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3EB17E75161F17B200A27750 /* Build configuration list for PBXNativeTarget "MarkdownParserApp" */;
@@ -321,11 +500,29 @@
 				3EB17EA0161F189F00A27750 /* MarkdownParser */,
 				3EB17E62161F17B200A27750 /* MarkdownParserTests */,
 				3EB17E3B161F17B100A27750 /* MarkdownParserApp */,
+				3DE3BA931658FF2E00CE504F /* MarkdownParserMac */,
+				3DE3BACC1659087100CE504F /* MarkdownParserMacTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3DE3BA921658FF2E00CE504F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DE3BAA01658FF2E00CE504F /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3DE3BACA1659087100CE504F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DE3BAD61659087100CE504F /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3EB17E3A161F17B100A27750 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -349,6 +546,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3DE3BACB1659087100CE504F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
 		3EB17E61161F17B200A27750 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -365,6 +575,27 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3DE3BA8F1658FF2E00CE504F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DE3BAAA1658FF9500CE504F /* BOMarkdownParser.m in Sources */,
+				3DE3BAAC1658FF9B00CE504F /* array.c in Sources */,
+				3DE3BAAD1658FF9D00CE504F /* buffer.c in Sources */,
+				3DE3BAAE1658FF9F00CE504F /* markdown.c in Sources */,
+				3DE3BAAB1658FF9800CE504F /* NSAttributedString+Markdown.m in Sources */,
+				3DE3BABF165903B500CE504F /* NSFont+UIKitAdditions.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3DE3BAC81659087100CE504F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DE3BAE2165908E900CE504F /* MarkdownParserTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3EB17E38161F17B100A27750 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -398,6 +629,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		3DE3BADF165908C000CE504F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3DE3BA931658FF2E00CE504F /* MarkdownParserMac */;
+			targetProxy = 3DE3BADE165908C000CE504F /* PBXContainerItemProxy */;
+		};
 		3E575BDC161F29FF00286500 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3EB17E3B161F17B100A27750 /* MarkdownParserApp */;
@@ -411,6 +647,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		3DE3BA9E1658FF2E00CE504F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3DE3BA9F1658FF2E00CE504F /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3DE3BAD41659087100CE504F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3DE3BAD51659087100CE504F /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		3EB17E6D161F17B200A27750 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -438,6 +690,96 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3DE3BAA61658FF2E00CE504F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MarkdownParserMac/MarkdownParserMac-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "MarkdownParserMac/MarkdownParserMac-Info.plist";
+				INSTALL_PATH = "@rpath";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		3DE3BAA71658FF2E00CE504F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MarkdownParserMac/MarkdownParserMac-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "MarkdownParserMac/MarkdownParserMac-Info.plist";
+				INSTALL_PATH = "@rpath";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		3DE3BADC1659087100CE504F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MarkdownParserMacTests/MarkdownParserMacTests-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "MarkdownParserMacTests/MarkdownParserMacTests-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		3DE3BADD1659087100CE504F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MarkdownParserMacTests/MarkdownParserMacTests-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "MarkdownParserMacTests/MarkdownParserMacTests-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
 		3EB17E73161F17B200A27750 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -568,6 +910,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3DE3BAA51658FF2E00CE504F /* Build configuration list for PBXNativeTarget "MarkdownParserMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3DE3BAA61658FF2E00CE504F /* Debug */,
+				3DE3BAA71658FF2E00CE504F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3DE3BADB1659087100CE504F /* Build configuration list for PBXNativeTarget "MarkdownParserMacTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3DE3BADC1659087100CE504F /* Debug */,
+				3DE3BADD1659087100CE504F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		3EB17E36161F17B100A27750 /* Build configuration list for PBXProject "MarkdownParser" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

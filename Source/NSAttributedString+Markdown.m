@@ -10,8 +10,11 @@
 #import "NSAttributedString+Markdown.h"
 
 #import <libkern/OSAtomic.h>
-#import <UIKit/UIKit.h>
-
+#if TARGET_OS_IPHONE
+    #import <UIKit/UIKit.h>
+#else
+    #import <AppKit/AppKit.h>
+#endif
 
 
 @implementation NSMutableAttributedString (BOMarkers)

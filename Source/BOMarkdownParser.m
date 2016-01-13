@@ -9,7 +9,11 @@
 #import "BOMarkdownParser.h"
 
 #import "NSAttributedString+Markdown.h"
-#import <UIKit/UIKit.h>
+#if TARGET_OS_IPHONE
+    #import <UIKit/UIKit.h>
+#else
+    #import <AppKit/AppKit.h>
+#endif
 
 #import "markdown.h"
 #import "buffer.h"
@@ -26,7 +30,7 @@ NSString * const BOLinkAttributeName = @"BOLink";
 
 - (void)setupAttributes;
 - (void)preParseSetupAttributes;
-- (void)addAttribtuesToAttributedString:(NSMutableAttributedString *)output;
+- (void)addAttributesToAttributedString:(NSMutableAttributedString *)output;
 
 @end
 
@@ -153,7 +157,7 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
     [_output appendAttributedString:[[NSAttributedString alloc] initWithString:bufferString attributes:baseAttributes]];
     
     [_output beginEditing];
-    [self addAttribtuesToAttributedString:_output];
+    [self addAttributesToAttributedString:_output];
     [_output endEditing];
     
     NSAttributedString *result = [_output copy];
@@ -182,7 +186,9 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
     self.listAttributes = @{NSParagraphStyleAttributeName: listParagraph};
     self.listItemAttributes = @{};
     
-    self.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+#if TARGET_OS_IPHONE
+    CGFloat defaultSize = [UIFont systemFontSize];
+    self.font = [UIFont systemFontOfSize:defaultSize];
     self.textColor = [UIColor blackColor];
     
     self.emphasizeFont = ^(UIFont *originalFont){
@@ -194,6 +200,19 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
         CGFloat size = originalFont.pointSize;
         return [UIFont boldSystemFontOfSize:size];
     };
+#else
+    CGFloat defaultSize = [UIFont systemFontSize];
+    self.font = [UIFont fontWithName:@"Helvetica" size:defaultSize];
+    self.textColor = [UIColor blackColor];
+    
+    self.emphasizeFont = ^(UIFont *originalFont){
+        return [[NSFontManager sharedFontManager] convertFont:originalFont toHaveTrait:NSItalicFontMask];
+    };
+    
+    self.doubleEmphasizeFont = ^(UIFont *originalFont){
+        return [[NSFontManager sharedFontManager] convertFont:originalFont toHaveTrait:NSBoldFontMask];
+    };
+#endif
     
     self.replaceLinkFont = self.doubleEmphasizeFont;
 }
@@ -230,7 +249,7 @@ static void renderNormalText(struct buf *ob, struct buf *text, void *opaque);
     self.currentHeaderAttributes = self.headerAttributes;
 }
 
-- (void)addAttribtuesToAttributedString:(NSMutableAttributedString *)output;
+- (void)addAttributesToAttributedString:(NSMutableAttributedString *)output;
 {
     [output updateFontAttributeInRangesWithStartMarker:startEmphMarker endMarker:endEmphMarker usingBlock:self.emphasizeFont];
     [output updateFontAttributeInRangesWithStartMarker:startDoubleEmphMarker endMarker:endDoubleEmphMarker usingBlock:self.doubleEmphasizeFont];

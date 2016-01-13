@@ -7,9 +7,14 @@
 //
 
 #import <SenTestingKit/SenTestingKit.h>
-#import <UIKit/UIKit.h>
+#if TARGET_OS_IPHONE
+    #import <UIKit/UIKit.h>
+    #import "BOMarkdownParser.h"
+#else
+    #import <AppKit/AppKit.h>
+    #import <MarkdownParserMac/BOMarkdownParser.h>
+#endif
 
-#import "BOMarkdownParser.h"
 
 
 #define BOAssertEqualRanges(a1, a2, description, ...) \
@@ -62,13 +67,27 @@ do { \
 @implementation MarkdownParserTests
 {
     BOMarkdownParser *parser;
+
+    CGFloat defaultFontSize;
+    UIFont *defaultFont;
+    UIFont *defaultItalicFont;
+    UIFont *defaultBoldFont;
 }
 
 - (void)setUp
 {
     [super setUp];
+#if TARGET_OS_IPHONE
     parser = [NSClassFromString(@"BOMarkdownParser") parser];
+#else
+    parser = [BOMarkdownParser parser];
+#endif
     
+    defaultFontSize = [parser.font pointSize];
+    
+    defaultFont = parser.font;
+    defaultItalicFont = parser.emphasizeFont(defaultFont);
+    defaultBoldFont = parser.doubleEmphasizeFont(defaultFont);
 }
 
 - (void)tearDown
@@ -87,17 +106,17 @@ do { \
     
     NSRange range;
     NSDictionary *attr = [output attributesAtIndex:0 longestEffectiveRange:&range inRange:NSMakeRange(0, [output length])];
-    NSDictionary *should = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: [UIFont systemFontOfSize:14.]};
+    NSDictionary *should = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: defaultFont};
     STAssertEqualObjects(attr, should, @"");
     BOAssertEqualRanges(range, NSMakeRange(0, 4), @"");
 
     attr = [output attributesAtIndex:6 longestEffectiveRange:&range inRange:NSMakeRange(0, [output length])];
-    should = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: [UIFont italicSystemFontOfSize:14.]};
+    should = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: defaultItalicFont};
     STAssertEqualObjects(attr, should, @"");
     BOAssertEqualRanges(range, NSMakeRange(4, 3), @"");
 
     attr = [output attributesAtIndex:8 longestEffectiveRange:&range inRange:NSMakeRange(0, [output length])];
-    should = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: [UIFont systemFontOfSize:14.]};
+    should = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: defaultFont};
     STAssertEqualObjects(attr, should, @"");
     BOAssertEqualRanges(range, NSMakeRange(7, 5), @"");
 }
@@ -114,7 +133,7 @@ do { \
     STAssertNotNil(output, @"");
     STAssertEqualObjects([output string], @"Here's a list:\n•\taaa\n•\tbbb\n•\tccc\nAnd that's it.\n", @"");
     
-    NSDictionary *shouldAttr = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: [UIFont systemFontOfSize:14.]};
+    NSDictionary *shouldAttr = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: defaultFont};
     NSMutableDictionary *shouldListAttr = [NSMutableDictionary dictionaryWithDictionary:shouldAttr];
     [shouldListAttr addEntriesFromDictionary:parser.listAttributes];
 
@@ -158,10 +177,10 @@ do { \
     STAssertNotNil(output, @"");
     STAssertEqualObjects([output string], @"Header 1\nLorem ipsum.\nHeader 2\nLorem ipsum.\nHeader 3\nLorem ipsum.\n", @"");
 
-    NSDictionary *shouldAttr = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: [UIFont systemFontOfSize:14.]};
-    NSDictionary *shouldAttrHeader1 = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:24.]};
-    NSDictionary *shouldAttrHeader2 = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:20.]};
-    NSDictionary *shouldAttrHeader3 = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:18.]};
+    NSDictionary *shouldAttr = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: defaultFont};
+    NSDictionary *shouldAttrHeader1 = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: [defaultBoldFont fontWithSize:(defaultFontSize + 10.0)]};
+    NSDictionary *shouldAttrHeader2 = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: [defaultBoldFont fontWithSize:(defaultFontSize + 6.0)]};
+    NSDictionary *shouldAttrHeader3 = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: [defaultBoldFont fontWithSize:(defaultFontSize + 4.0)]};
     
     NSRange range;
     NSDictionary *attr = [output attributesAtIndex:0 longestEffectiveRange:&range inRange:NSMakeRange(0, [output length])];

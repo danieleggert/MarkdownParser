@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+#if __MAC_OS_X_VERSION_MIN_REQUIRED
+    #import "OS-X-ObjC-Compatibility.h"
+#endif
+
 @class UIFont;
 @class UIColor;
 @class NSMutableParagraphStyle;
